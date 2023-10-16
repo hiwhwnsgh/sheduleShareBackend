@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserService userService;
-    private static String secretKey = "o/3KOExETnCvjVQytqlpli95oOSqkDKvjoT3isLB50D/1MAl4tBWSIUFK9nGKi0qu6Fsw4+a1YmiTn5aW0jo+g==";
+    private static String secretKey = "your_token_key"; // 사용자가 생성한 token_key
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
