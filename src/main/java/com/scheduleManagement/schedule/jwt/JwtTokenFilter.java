@@ -43,7 +43,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // 전송받은 값에서 'Bearer ' 뒷부분(Jwt Token) 추출
         String token = authorizationHeader.split(" ")[1];
-        System.out.println("token = " + token);
         // 전송받은 Jwt Token이 만료되었으면 => 다음 필터 진행(인증 X)
         if(JwtTokenUtil.isExpired(token, secretKey)) {
             filterChain.doFilter(request, response);
@@ -52,7 +51,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // Jwt Token에서 loginId 추출
         String loginId = JwtTokenUtil.getLoginId(token, secretKey);
-        System.out.println("loginId = " + loginId);
         // 추출한 loginId로 User 찾아오기
         User loginUser = userService.getLoginUserByLoginId(loginId);
 
