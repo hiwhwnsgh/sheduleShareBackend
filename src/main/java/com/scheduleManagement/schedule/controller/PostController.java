@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.sql.Date;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000") // 허용할 출처 지정
 public class PostController {
 
     private PostService postService;
