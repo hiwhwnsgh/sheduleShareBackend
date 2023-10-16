@@ -52,7 +52,7 @@ public class JwtLoginApiController {
         String jwtToken = JwtTokenUtil.createToken(user.getLoginId(), secretKey, expireTimeMs);
         return jwtToken;
     }
-
+    
     @GetMapping("/info")
     public String userInfo(Authentication auth) {
         System.out.println("JwtLoginApiController.userInfo");
