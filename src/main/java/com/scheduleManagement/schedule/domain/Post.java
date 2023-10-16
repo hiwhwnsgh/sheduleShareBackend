@@ -1,5 +1,6 @@
 package com.scheduleManagement.schedule.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.scheduleManagement.schedule.util.TagListSerializer;
@@ -9,10 +10,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
-@Table(name = "post") // 테이블 이름을 "post"로 정의합니다.
+@Table(name = "post")
 @JsonSerialize(using = TagListSerializer.class)
 public class Post {
     @Id
@@ -31,16 +33,13 @@ public class Post {
     @Column
     private Date endDate;
 
-
-    @Column(name = "registration_date") // 데이터베이스 테이블의 컬럼 이름을 지정합니다.
+    @Column(name = "registration_date")
     private Date registrationDate;
 
-
     @ManyToOne
-    @JoinColumn(name = "login_Id") // post 테이블의 loginId 컬럼과 매핑
+    @JoinColumn(name = "login_Id")
     private User user;
 
-    // 다대다 관계 매핑
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "post_tag",
@@ -49,8 +48,8 @@ public class Post {
     )
     private List<Tag> tags;
 
-    @OneToOne
-    @JoinColumn(name = "chatroom_id")
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private ChatRoom chatRoom;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -58,3 +57,4 @@ public class Post {
 
     // 생성자, 게터, 세터, 기타 메서드 추가
 }
+

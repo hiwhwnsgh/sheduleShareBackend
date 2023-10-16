@@ -70,7 +70,6 @@ public class PostController {
             postListDTO.setRegistrationDate(post.getRegistrationDate());
             postListDTO.setTags(post.getTags());
             postListDTO.setNickname(post.getUser().getNickname());
-            System.out.println("post.getContent() = " + post.getContent());
             return postListDTO;
         });
         return ResponseEntity.ok(postListDTOS);
@@ -159,6 +158,8 @@ public class PostController {
             }
 
             // 게시물 생성
+
+
             Post post = new Post();
             post.setTitle(title);
             post.setContent(content);
@@ -273,7 +274,6 @@ public class PostController {
                     user.getId(),user.getLoginId(),user.getNickname(),application.getApplicationDate()
             );
             userApplicationDTOs.add(userApplicationDTO);
-            System.out.println("userApplicationDTO = " + userApplicationDTO.getApplicationDate());
         }
             return ResponseEntity.ok(userApplicationDTOs);
     }
@@ -322,7 +322,6 @@ public class PostController {
     }
     @GetMapping("/schedule/{userId}")
     public ResponseEntity<List<ScheduleDTO>> getAcceptedPostApplications(@PathVariable Long userId) {
-        System.out.println("userId = " + userId);
         List<Post> acceptedApplications = postService.getAcceptedPostApplications(userId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
         for(Post post : acceptedApplications){

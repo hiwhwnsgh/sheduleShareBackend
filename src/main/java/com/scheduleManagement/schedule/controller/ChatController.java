@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000") // 허용할 출처 지정
 public class ChatController {
 
     ChatService chatService;
@@ -46,8 +45,6 @@ public class ChatController {
 
     @MessageMapping("/sendChat") // 클라이언트에서 메시지를 보낼 때 사용하는 주소
     public ChatMessage sendChat(@Payload MessageDTO Message) {
-        System.out.println("ChatController.sendChat 구독 완료");
-        System.out.println("chatMessage.getContent() = " + Message.getContent());
         User user = userService.getLoginUserById(Message.getUserId());
         ChatRoom chatRoom = chatService.getChatRoomByPostId(Message.getPostId());
         PostParticipant postParticipant = postService.getPostParticipant(Message.getPostId(),Message.getUserId());
@@ -71,7 +68,6 @@ public class ChatController {
             @RequestParam(name="page") Long postId
     ){
         User user = userService.getLoginUserByLoginId(loginId);
-        System.out.println("user.getId()+postId = " + user.getId()+postId);
         PostParticipant postParticipant = postService.getPostParticipant(postId,user.getId());
         List<ChatMessage> messages = chatService.getChatMessages(postParticipant.getParticipationDate());
         List<ChatMessagesDTO> chatMessagesDTOS = new ArrayList<>();

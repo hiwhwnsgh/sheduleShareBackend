@@ -21,13 +21,12 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatRoomId;
 
-    @OneToOne(mappedBy = "chatRoom", cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-    @JsonBackReference  // 관리되는 쪽
+    @OneToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id") // post_id 컬럼과 Post 엔티티의 id 컬럼을 연결
     private Post post;
 
     @OneToMany(mappedBy = "chatRoom")
-    @JsonBackReference  // 역쪽
+    @JsonBackReference
     private List<ChatMessage> messages;
 
     @Column(name = "created_at")
@@ -43,3 +42,4 @@ public class ChatRoom {
 
     // 다른 필요한 메서드 및 로직 추가
 }
+

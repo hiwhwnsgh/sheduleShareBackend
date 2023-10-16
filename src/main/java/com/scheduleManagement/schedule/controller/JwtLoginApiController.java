@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class JwtLoginApiController {
 
     private final UserService userService;
@@ -52,10 +53,8 @@ public class JwtLoginApiController {
         String jwtToken = JwtTokenUtil.createToken(user.getLoginId(), secretKey, expireTimeMs);
         return jwtToken;
     }
-    
     @GetMapping("/info")
     public String userInfo(Authentication auth) {
-        System.out.println("JwtLoginApiController.userInfo");
         User loginUser = userService.getLoginUserByLoginId(auth.getName());
         return String.format("userId: %s\nloginId : %s\nnickname : %s\nrole : %s",
                 loginUser.getId(),loginUser.getLoginId(), loginUser.getNickname(), loginUser.getRole().name());
